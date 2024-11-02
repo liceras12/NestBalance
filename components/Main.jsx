@@ -1,11 +1,5 @@
-import { useEffect, useState } from "react";
-import {
-  FlatList,
-  View,
-  ActivityIndicator,
-  Text,
-  StyleSheet,
-} from "react-native";
+//import { useEffect, useState } from "react";
+import { View, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Logo } from "./Logo";
 import TopBar from "./TopBar";

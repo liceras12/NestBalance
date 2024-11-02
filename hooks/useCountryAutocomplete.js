@@ -1,0 +1,146 @@
+import { useState } from "react";
+
+// Lista de países
+const countries = [
+  "Argentina",
+  "Bolivia",
+  "Brasil",
+  "Chile",
+  "Colombia",
+  "Ecuador",
+  "Paraguay",
+  "Perú",
+  "Uruguay",
+  "Venezuela",
+  "Estados Unidos",
+  "Canadá",
+  "México",
+  "Guatemala",
+  "Honduras",
+  "El Salvador",
+  "Nicaragua",
+  "Costa Rica",
+  "Panamá",
+  "Cuba",
+  "República Dominicana",
+  "Haití",
+  "Puerto Rico",
+  "Jamaica",
+  "Trinidad y Tobago",
+  "Barbados",
+  "Granada",
+  "Santa Lucía",
+  "San Cristóbal y Nieves",
+  "San Vicente y las Granadinas",
+  "Antigua y Barbuda",
+  "Bahamas",
+  "Belice",
+  "Dominica",
+  "Surinam",
+  "Guyana",
+  "Guyana Francesa",
+  "Brunei",
+  "Filipinas",
+  "Indonesia",
+  "Malasia",
+  "Singapur",
+  "Tailandia",
+  "Vietnam",
+  "Camboya",
+  "Laos",
+  "Myanmar",
+  "Bangladés",
+  "Bután",
+  "India",
+  "Maldivas",
+  "Nepal",
+  "Pakistán",
+  "Sri Lanka",
+  "China",
+  "Corea del Norte",
+  "Corea del Sur",
+  "Japón",
+  "Mongolia",
+  "Taiwán",
+  "Afganistán",
+  "Arabia Saudita",
+  "Baréin",
+  "Emiratos Árabes Unidos",
+  "Irán",
+  "Iraq",
+  "Albania",
+  "Alemania",
+  "Andorra",
+  "Austria",
+  "Bélgica",
+  "Bielorusia",
+  "Bosnia y Herzegovina",
+  "Bulgaria",
+  "Checo",
+  "Chipre",
+  "Croacia",
+  "Dinamarca",
+  "Eslovaquia",
+  "Eslovenia",
+  "España",
+  "Estonia",
+  "Finlandia",
+  "Francia",
+  "Gran Bretaña",
+  "Grecia",
+  "Holanda",
+  "Hungría",
+  "Italia",
+  "Irlanda",
+  "Islandia",
+  "Letonia",
+  "Liechtenstein",
+  "Lituania",
+  "Luxemburgo",
+  "Macedonia",
+  "Moldavia",
+  "Malta",
+  "Mónaco",
+  "Noruega",
+  "Polonia",
+  "Portugal",
+  "Rumania",
+  "Rusia",
+  "San Marino",
+  "Serbia y Montenegro",
+  "Suecia",
+  "Suiza",
+  "Ucrania",
+  "Uzbekistán",
+];
+
+export const useCountryAutocomplete = () => {
+  const [pais, setPais] = useState("");
+  const [filteredCountries, setFilteredCountries] = useState([]);
+  const [sexo, setSexo] = useState("");
+
+  // Maneja la búsqueda de países
+  const handleCountryInput = (text) => {
+    setPais(text);
+    const filtered = countries.filter((country) =>
+      country.toLowerCase().includes(text.toLowerCase()),
+    );
+    setFilteredCountries(filtered);
+  };
+
+  // Selecciona un país y limpia la lista de sugerencias
+  const selectCountry = (selectedCountry) => {
+    setPais(selectedCountry);
+    setFilteredCountries([]); // Vacía la lista de países después de seleccionar uno
+  };
+
+  return {
+    pais,
+    setPais,
+    filteredCountries,
+    handleCountryInput,
+    sexo,
+    setSexo,
+    selectCountry,
+  };
+};

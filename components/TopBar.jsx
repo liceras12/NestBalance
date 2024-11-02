@@ -1,4 +1,3 @@
-// TopBar.js
 import React from "react";
 import {
   View,
@@ -6,20 +5,21 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
+  Image,
 } from "react-native";
+import { LogoInvertido } from "./LogoInvertido";
 
 export default function TopBar() {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Inicio</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Perfil</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Ajustes</Text>
-      </TouchableOpacity>
+      <View>
+        <LogoInvertido />
+      </View>
+      <View>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Usuario</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     backgroundColor: "#f15555",
-    paddingVertical: 10,
+    paddingVertical: 0.5,
     width: Dimensions.get("window").width,
   },
   button: {
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "white",
-    fontSize: 12,
+    fontSize: 18,
     fontWeight: "bold",
   },
 });

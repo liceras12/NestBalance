@@ -1,8 +1,8 @@
 import React from "react";
 import { Image, StyleSheet } from "react-native";
 
-const icon = require("../assets/logoNestBalance.png");
-export function Logo() {
+const icon = require("../assets/logoInvertidoNestBalance.png");
+export function LogoInvertido() {
   return (
     <Image
       source={icon}
@@ -16,7 +16,7 @@ export function Logo() {
 
 const styles = StyleSheet.create({
   logo: {
-    width: 100,
-    height: 100,
+    width: 70,
+    height: 60,
   },
 });

@@ -9,6 +9,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Logo } from "./Logo";
 import TopBar from "./TopBar";
+import MenuBar from "./MenuBar";
 
 export function Main() {
   const insets = useSafeAreaInsets();
@@ -18,6 +19,7 @@ export function Main() {
       <View style={styles.contentContainer}>
         <Logo />
       </View>
+      <MenuBar />
     </View>
   );
 }

@@ -189,7 +189,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "end",
-    //paddingVertical: 10,
   },
   text: {
     color: "black",

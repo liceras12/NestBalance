@@ -17,7 +17,6 @@ export const createAccount = async (
   usuarioData,
 ) => {
   try {
-    // Crear y autenticar al usuario
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,

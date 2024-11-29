@@ -11,11 +11,14 @@ import TopBar from "./TopBar";
 import MenuBar from "./MenuBar";
 import Nest from "../pages/Nest";
 import CreateNestForm from "../pages/CreateNestForm";
+import Service from "../pages/Service";
+import Pantry from "../pages/Pantry";
 
 export function Main() {
   const insets = useSafeAreaInsets();
   const [currentView, setCurrentView] = useState("inicio");
   const [showNidoOptions, setShowNidoOptions] = useState(false);
+  const [showPagoOptions, setShowPagoOptions] = useState(false);
 
   const renderView = () => {
     switch (currentView) {
@@ -23,14 +26,18 @@ export function Main() {
         return <CreateNestForm />;
       case "viewNido":
         return <Nest />;
+      case "service":
+        return <Service />;
+      case "pantry":
+        return <Pantry />;
       default:
         return <Logo />;
     }
   };
 
   const handleOutsidePress = () => {
-    // Hide the options in MenuBar if visible
-    setShowNidoOptions(false); // You may need to pass `setShowNidoOptions` as a prop from Main to MenuBar
+    setShowNidoOptions(false);
+    setShowPagoOptions(false);
   };
 
   return (

@@ -15,9 +15,13 @@ const inicio = require("../assets/inicio.png");
 
 export default function TopBar({ setCurrentView }) {
   const [showNidoOptions, setShowNidoOptions] = useState(false);
+  const [showPagoOptions, setShowPagoOptions] = useState(false);
 
   const handleNidoPress = () => {
     setShowNidoOptions(!showNidoOptions);
+  };
+  const handlePagoPress = () => {
+    setShowPagoOptions(!showPagoOptions);
   };
 
   return (
@@ -36,13 +40,32 @@ export default function TopBar({ setCurrentView }) {
         <Image source={pagos} style={styles.logo} />
         <Text style={styles.buttonText}>Pagos</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => setCurrentView("gastos")}
-      >
+
+      <TouchableOpacity style={styles.button} onPress={handlePagoPress}>
         <Image source={gastos} style={styles.logo} />
         <Text style={styles.buttonText}>Gastos</Text>
       </TouchableOpacity>
+
+      {showPagoOptions && (
+        <View style={styles.gastosContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              setCurrentView("service");
+              setShowPagoOptions(false);
+            }}
+          >
+            <Text style={styles.optionText}>Servicios</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setCurrentView("pantry");
+              setShowPagoOptions(false);
+            }}
+          >
+            <Text style={styles.optionText}>Despensa</Text>
+          </TouchableOpacity>
+        </View>
+      )}
 
       <TouchableOpacity style={styles.button} onPress={handleNidoPress}>
         <Image source={nido} style={styles.logo} />
@@ -50,7 +73,7 @@ export default function TopBar({ setCurrentView }) {
       </TouchableOpacity>
 
       {showNidoOptions && (
-        <View style={styles.optionsContainer}>
+        <View style={styles.nidoContainer}>
           <TouchableOpacity
             onPress={() => {
               setCurrentView("createNido");
@@ -79,7 +102,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "end",
     backgroundColor: "#f15555",
-    paddingVertical: 10,
+    paddingVertical: 5,
     width: Dimensions.get("window").width,
   },
   button: {
@@ -96,16 +119,15 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
   },
-  optionsContainer: {
+  nidoContainer: {
     position: "absolute",
     top: -70,
-    left: Dimensions.get("window").width * 0.7,
+    left: Dimensions.get("window").width * 0.75,
     backgroundColor: "#f15555",
     borderRadius: 5,
     padding: 5,
     zIndex: 1000,
     shadowColor: "#000",
-    //shadowOpacity: 0.9,
     shadowRadius: 3,
     shadowOffset: { width: 0, height: 2 },
     width: "25%",
@@ -113,5 +135,18 @@ const styles = StyleSheet.create({
   optionText: {
     color: "white",
     padding: 5,
+  },
+  gastosContainer: {
+    position: "absolute",
+    top: -70,
+    left: Dimensions.get("window").width * 0.5,
+    backgroundColor: "#f15555",
+    borderRadius: 5,
+    padding: 5,
+    zIndex: 1000,
+    shadowColor: "#000",
+    shadowRadius: 3,
+    shadowOffset: { width: 0, height: 2 },
+    width: "25%",
   },
 });

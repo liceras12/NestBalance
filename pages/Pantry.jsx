@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { useExpenses } from "../hooks/useExpenses";
 
@@ -18,78 +19,72 @@ const Pantry = ({ nidoId }) => {
   const [precioUnidad, setPrecioUnidad] = React.useState("");
 
   if (loading) {
-    return <ActivityIndicator size="100%" color="#0000ff" />;
+    return <ActivityIndicator size="large" color="#0000ff" />;
   }
+
+  const handleAddPantryItem = () => {
+    if (name && cantidad && precioUnidad) {
+      addItem("despensa", name, {
+        cantidad: parseInt(cantidad),
+        precioUnidad: parseFloat(precioUnidad),
+        estado: true,
+      });
+      setName("");
+      setCantidad("");
+      setPrecioUnidad("");
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Despensa</Text>
-      {Object.keys(expenses.despensa)
-        .filter((key) => expenses.despensa[key].estado)
-        .map((item) => (
-          <View key={item} style={styles.content}>
-            <Text style={styles.list}>{item}</Text>
-            <Text>Precio Unidad: {expenses.despensa[item].precioUnidad}</Text>
-            <View style={styles.barButtons}>
-              <TouchableOpacity
-                onPress={() => deleteItem("despensa", item)}
-                style={styles.button}
-              >
-                <Text style={styles.buttonText}>Editar</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => deleteItem("despensa", item)}
-                style={styles.button}
-              >
-                <Text style={styles.buttonText}>Eliminar</Text>
-              </TouchableOpacity>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <Text style={styles.title}>Despensa</Text>
+        {Object.keys(expenses.despensa)
+          .filter((key) => expenses.despensa[key].estado)
+          .map((item) => (
+            <View key={item} style={styles.content}>
+              <Text style={styles.list}>{item}</Text>
+              <Text>Precio Unidad: {expenses.despensa[item].precioUnidad}</Text>
+              <View style={styles.barButtons}>
+                <TouchableOpacity
+                  onPress={() =>
+                    updateItem("despensa", item, { estado: false })
+                  }
+                  style={styles.button}
+                >
+                  <Text style={styles.buttonText}>Editar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => deleteItem("despensa", item)}
+                  style={styles.button}
+                >
+                  <Text style={styles.buttonText}>Eliminar</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        ))}
-      <Button
-        title="Agregar Item"
-        onPress={() =>
-          addItem("despensa", "nuevoItem", {
-            precioUnidad: 50,
-            cantidad: 1,
-            estado: true,
-          })
-        }
-      />
-      <Text style={styles.label}>Nombre</Text>
-      <TextInput
-        style={styles.input}
-        value={name}
-        onChangeText={setName}
-        placeholder="Nombre"
-        placeholderTextColor="#8c8b83"
-      />
-      <Text style={styles.label}>Cantidad</Text>
-      <TextInput
-        style={styles.input}
-        value={cantidad}
-        onChangeText={setCantidad}
-        placeholder="Cantidad"
-        placeholderTextColor="#8c8b83"
-      />
-      <Text style={styles.label}>Precio por unidad</Text>
-      <TextInput
-        style={styles.input}
-        value={precioUnidad}
-        onChangeText={setPrecioUnidad}
-        placeholder="Precio"
-        placeholderTextColor="#8c8b83"
-      />
-      <Button
-        title="Agregar Despensa"
-        onPress={() =>
-          addItem("despensa", "nuevoDespensa", {
-            cantidad: 100,
-            tipo: "variable",
-            estado: true,
-          })
-        }
-      />
+          ))}
+        <TextInput
+          style={styles.input}
+          value={name}
+          onChangeText={setName}
+          placeholder="Nombre"
+        />
+        <TextInput
+          style={styles.input}
+          value={cantidad}
+          onChangeText={setCantidad}
+          placeholder="Cantidad"
+          keyboardType="numeric"
+        />
+        <TextInput
+          style={styles.input}
+          value={precioUnidad}
+          onChangeText={setPrecioUnidad}
+          placeholder="Precio por unidad"
+          keyboardType="numeric"
+        />
+        <Button title="Agregar Despensa" onPress={handleAddPantryItem} />
+      </ScrollView>
     </View>
   );
 };

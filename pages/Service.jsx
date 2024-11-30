@@ -20,92 +20,83 @@ const Services = ({ nidoId }) => {
   const [type, setType] = React.useState("");
 
   if (loading) {
-    return <ActivityIndicator size="100%" color="#0000ff" />;
+    return <ActivityIndicator size="large" color="#0000ff" />;
   }
+
+  const handleAddService = () => {
+    if (name && costo && direccionFacturacion && type) {
+      addItem("servicio", name, {
+        costo: parseFloat(costo),
+        direccionFacturacion,
+        tipo: type,
+        estado: true,
+      });
+      setName("");
+      setCosto("");
+      setDireccionFacturacion("");
+      setType("");
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false} // Oculta la barra de scroll
-        keyboardShouldPersistTaps="handled" // Permite que el scroll responda sobre inputs o botones
-        alwaysBounceVertical={true} // Añade una experiencia de scroll suave
-      >
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         <Text style={styles.title}>Servicios</Text>
         {Object.keys(expenses.servicio)
           .filter((key) => expenses.servicio[key].estado)
           .map((service) => (
             <View key={service} style={styles.content}>
               <Text style={styles.list}>{service}</Text>
-              <View>
-                <View>
-                  <Text>Costo: {expenses.servicio[service].costo}</Text>
-                  <Text>
-                    Dirección de facturación:{" "}
-                    {expenses.servicio[service].direccionFacturacion}
-                  </Text>
-                </View>
-                <View style={styles.barButtons}>
-                  <TouchableOpacity
-                    onPress={() => deleteItem("servicio", service)}
-                    style={styles.button}
-                  >
-                    <Text style={styles.buttonText}>Editar</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => deleteItem("servicio", service)}
-                    style={styles.button}
-                  >
-                    <Text style={styles.buttonText}>Eliminar</Text>
-                  </TouchableOpacity>
-                </View>
+              <Text>Costo: {expenses.servicio[service].costo}</Text>
+              <Text>
+                Dirección de facturación:{" "}
+                {expenses.servicio[service].direccionFacturacion}
+              </Text>
+              <View style={styles.barButtons}>
+                <TouchableOpacity
+                  onPress={() =>
+                    updateItem("servicio", service, { estado: false })
+                  }
+                  style={styles.button}
+                >
+                  <Text style={styles.buttonText}>Editar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => deleteItem("servicio", service)}
+                  style={styles.button}
+                >
+                  <Text style={styles.buttonText}>Eliminar</Text>
+                </TouchableOpacity>
               </View>
             </View>
           ))}
         <Text style={styles.title}>Nuevo Servicio</Text>
-        <Text style={styles.label}>Nombre</Text>
         <TextInput
           style={styles.input}
           value={name}
           onChangeText={setName}
           placeholder="Nombre"
-          placeholderTextColor="#8c8b83"
         />
-        <Text style={styles.label}>Costo</Text>
         <TextInput
           style={styles.input}
           value={costo}
           onChangeText={setCosto}
           placeholder="Costo"
-          placeholderTextColor="#8c8b83"
+          keyboardType="numeric"
         />
-        <Text style={styles.label}>Direccion de facturación</Text>
         <TextInput
           style={styles.input}
           value={direccionFacturacion}
           onChangeText={setDireccionFacturacion}
-          placeholder="Direccion de facturación"
-          placeholderTextColor="#8c8b83"
+          placeholder="Dirección de facturación"
         />
-        <Text style={styles.label}>Tipo</Text>
         <TextInput
           style={styles.input}
           value={type}
           onChangeText={setType}
           placeholder="Tipo"
-          placeholderTextColor="#8c8b83"
         />
-        <Button
-          title="Agregar Servicio"
-          onPress={() =>
-            addItem("servicio", "nuevoServicio", {
-              costo: 100,
-              direccionFacturacion: "Sin dirección",
-              tipo: "variable",
-              estado: true,
-            })
-          }
-        />
+        <Button title="Agregar Servicio" onPress={handleAddService} />
       </ScrollView>
     </View>
   );

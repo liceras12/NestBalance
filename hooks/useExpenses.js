@@ -6,40 +6,39 @@ import {
   deleteExpenseItem,
 } from "../services/expensesService";
 import { getNidoId } from "../services/getNestId";
+import { getGastoId } from "../services/getGastoId";
 
 export const useExpenses = () => {
   const [expenses, setExpenses] = useState({ servicio: {}, despensa: {} });
   const [loading, setLoading] = useState(true);
   const [nidoId, setNidoId] = useState(null);
+  const [gastoId, setGastoId] = useState(null);
 
   useEffect(() => {
-    const fetchNidoIdAndLoadExpenses = async () => {
-      const id = await getNidoId();
-      if (!id) {
-        setLoading(false);
-        return;
-      }
-
-      setNidoId(id);
-      setLoading(true);
-
+    const fetchData = async () => {
       try {
-        const data = await fetchExpenses(id);
+        const nido = await getNidoId();
+        setNidoId(nido);
+
+        const gasto = await getGastoId(nido);
+        setGastoId(gasto);
+
+        const data = await fetchExpenses(gasto);
         setExpenses(data);
       } catch (error) {
-        console.error("Error loading expenses:", error);
+        console.error("Error initializing expenses data:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchNidoIdAndLoadExpenses();
+    fetchData();
   }, []);
 
   const addItem = async (category, itemName, itemData) => {
-    if (!nidoId) return;
+    if (!gastoId) return;
     try {
-      await addExpenseItem(nidoId, category, itemName, itemData);
+      await addExpenseItem(gastoId, category, itemName, itemData);
       setExpenses((prev) => ({
         ...prev,
         [category]: {
@@ -53,9 +52,9 @@ export const useExpenses = () => {
   };
 
   const updateItem = async (category, itemName, updateData) => {
-    if (!nidoId) return;
+    if (!gastoId) return;
     try {
-      await updateExpenseItem(nidoId, category, itemName, updateData);
+      await updateExpenseItem(gastoId, category, itemName, updateData);
       setExpenses((prev) => ({
         ...prev,
         [category]: { ...prev[category], [itemName]: updateData },
@@ -66,9 +65,9 @@ export const useExpenses = () => {
   };
 
   const deleteItem = async (category, itemName) => {
-    if (!nidoId) return;
+    if (!gastoId) return;
     try {
-      await deleteExpenseItem(nidoId, category, itemName);
+      await deleteExpenseItem(gastoId, category, itemName);
       setExpenses((prev) => ({
         ...prev,
         [category]: {

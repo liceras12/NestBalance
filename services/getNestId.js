@@ -1,39 +1,38 @@
-import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
+import app from "./firebaseConfig";
 
-const db = getFirestore();
-const auth = getAuth();
+const db = getFirestore(app);
+const nidosCollection = collection(db, "nidos");
 
 export const getNidoId = async () => {
-  const user = auth.currentUser;
-  if (!user) {
-    console.error("No user is logged in.");
-    return null;
-  }
-
   try {
-    const userDocRef = doc(db, "usuarios", user.uid);
-    const userDoc = await getDoc(userDocRef);
+    const auth = getAuth(app);
+    const user = auth.currentUser;
 
-    if (userDoc.exists()) {
-      const nidos = userDoc.data().nidos;
-      // Buscar el primer nido en estado true
-      const activeNidoId = Object.keys(nidos).find(
-        (nidoId) => nidos[nidoId].estado,
-      );
-
-      if (activeNidoId) {
-        return activeNidoId;
-      } else {
-        console.error("No active nido found.");
-        return null;
-      }
-    } else {
-      console.error("User document does not exist.");
-      return null;
+    if (!user) {
+      throw new Error("No user logged in.");
     }
+
+    const q = query(
+      nidosCollection,
+      where("integrante.userId", "==", user.uid),
+    );
+    const snapshot = await getDocs(q);
+
+    if (!snapshot.empty) {
+      return snapshot.docs[0].id; // Devuelve el id del primer nido encontrado
+    }
+
+    throw new Error("No active nido found for user.");
   } catch (error) {
-    console.error("Error retrieving nidoId:", error);
-    return null;
+    console.error("Error fetching nidoId:", error);
+    throw error;
   }
 };

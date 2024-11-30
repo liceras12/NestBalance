@@ -1,5 +1,4 @@
 import { StatusBar } from "expo-status-bar";
-//import { StyleSheet } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -36,13 +35,3 @@ export default function App() {
     </SafeAreaProvider>
   );
 }
-
-/*const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "cream",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
-*/

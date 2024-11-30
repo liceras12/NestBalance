@@ -13,6 +13,8 @@ import {
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+//import Auth from "../services/supabase";
+
 const icon = require("../assets/logoInvertidoNestBalance.png");
 
 export default function Login({ navigation }) {

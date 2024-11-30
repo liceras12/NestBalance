@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowRadius: 3,
     shadowOffset: { width: 0, height: 2 },
-    width: "25%",
+    width: 100,
   },
   optionText: {
     color: "white",
@@ -147,6 +147,6 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowRadius: 3,
     shadowOffset: { width: 0, height: 2 },
-    width: "25%",
+    width: 100,
   },
 });
